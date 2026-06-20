@@ -894,6 +894,12 @@ export function VisualConfigEditor({
                               'config_management.visual.sections.network.strategy_fill_first'
                             ),
                           },
+                          {
+                            value: 'fill-first-oldest',
+                            label: t(
+                              'config_management.visual.sections.network.strategy_fill_first_oldest'
+                            ),
+                          },
                         ]}
                         id={`${routingStrategyLabelId}-select`}
                         disabled={disabled}
