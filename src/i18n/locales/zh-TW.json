@@ -192,7 +192,8 @@
     "routing_strategy_hint": "round-robin 為輪詢，fill-first 為優先填充。",
     "routing_strategy_update": "更新",
     "routing_strategy_round_robin": "round-robin（輪詢）",
-    "routing_strategy_fill_first": "fill-first（優先填充）"
+    "routing_strategy_fill_first": "fill-first（優先填充）",
+    "routing_strategy_fill_first_oldest": "fill-first-oldest（最舊優先）"
   },
   "api_keys": {
     "title": "API 金鑰管理",
@@ -963,6 +964,7 @@
           "routing_strategy_hint": "選擇憑證選擇策略",
           "strategy_round_robin": "輪詢（Round Robin）",
           "strategy_fill_first": "填充優先（Fill First）",
+          "strategy_fill_first_oldest": "填充優先·最舊優先（Fill First Oldest）",
           "session_affinity_ttl": "會話黏性 TTL",
           "force_model_prefix": "強制模型前綴",
           "force_model_prefix_desc": "未帶前綴的模型請求只使用無前綴憑證",
