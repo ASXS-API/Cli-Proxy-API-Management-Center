@@ -975,6 +975,35 @@ export function VisualConfigEditor({
                       onChange={(disableCooling) => onChange({ disableCooling })}
                     />
                     <ToggleRow
+                      title={t(
+                        'config_management.visual.sections.network.fatal_inactive_token_owner'
+                      )}
+                      description={t(
+                        'config_management.visual.sections.network.fatal_inactive_token_owner_desc'
+                      )}
+                      checked={values.fatalInactiveTokenOwner}
+                      disabled={disabled}
+                      onChange={(fatalInactiveTokenOwner) => onChange({ fatalInactiveTokenOwner })}
+                    />
+                    <ToggleRow
+                      title={t('config_management.visual.sections.network.fatal_unauthorized')}
+                      description={t(
+                        'config_management.visual.sections.network.fatal_unauthorized_desc'
+                      )}
+                      checked={values.fatalUnauthorized}
+                      disabled={disabled}
+                      onChange={(fatalUnauthorized) => onChange({ fatalUnauthorized })}
+                    />
+                    <ToggleRow
+                      title={t('config_management.visual.sections.network.fatal_usage_limit')}
+                      description={t(
+                        'config_management.visual.sections.network.fatal_usage_limit_desc'
+                      )}
+                      checked={values.fatalUsageLimit}
+                      disabled={disabled}
+                      onChange={(fatalUsageLimit) => onChange({ fatalUsageLimit })}
+                    />
+                    <ToggleRow
                       title={t('config_management.visual.sections.network.session_affinity')}
                       checked={values.routingSessionAffinity}
                       disabled={disabled}

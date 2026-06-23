@@ -731,6 +731,9 @@ function getNextDirtyFields(
       'redisUsageQueueRetentionSeconds',
       'passthroughHeaders',
       'disableCooling',
+      'fatalInactiveTokenOwner',
+      'fatalUnauthorized',
+      'fatalUsageLimit',
       'disableImageGeneration',
       'authAutoRefreshWorkers',
       'enableGeminiCliEndpoint',
@@ -994,6 +997,7 @@ export function useVisualConfig() {
       const remoteManagement = asRecord(parsed['remote-management']);
       const quotaExceeded = asRecord(parsed['quota-exceeded']);
       const routing = asRecord(parsed.routing);
+      const fatalCredentialErrors = asRecord(parsed['fatal-credential-errors']);
       const payload = asRecord(parsed.payload);
       const streaming = asRecord(parsed.streaming);
       const claudeHeaderDefaults = asRecord(parsed['claude-header-defaults']);
@@ -1041,6 +1045,9 @@ export function useVisualConfig() {
         maxRetryCredentials: String(parsed['max-retry-credentials'] ?? ''),
         maxRetryInterval: String(parsed['max-retry-interval'] ?? ''),
         disableCooling: Boolean(parsed['disable-cooling']),
+        fatalInactiveTokenOwner: Boolean(fatalCredentialErrors?.['inactive-token-owner'] ?? true),
+        fatalUnauthorized: Boolean(fatalCredentialErrors?.['unauthorized'] ?? true),
+        fatalUsageLimit: Boolean(fatalCredentialErrors?.['usage-limit'] ?? true),
         disableImageGeneration: parseDisableImageGenerationMode(parsed['disable-image-generation']),
         authAutoRefreshWorkers: String(parsed['auth-auto-refresh-workers'] ?? ''),
         wsAuth: Boolean(parsed['ws-auth']),
@@ -1209,6 +1216,23 @@ export function useVisualConfig() {
         setIntFromStringInDoc(doc, ['max-retry-credentials'], values.maxRetryCredentials);
         setIntFromStringInDoc(doc, ['max-retry-interval'], values.maxRetryInterval);
         setBooleanInDoc(doc, ['disable-cooling'], values.disableCooling);
+
+        // fatal-credential-errors rules default to enabled. Only materialize the
+        // block when it already exists or a rule has been turned off, so unrelated
+        // saves never inject the section into a clean config.
+        const fatalRulesAllEnabled =
+          values.fatalInactiveTokenOwner && values.fatalUnauthorized && values.fatalUsageLimit;
+        if (docHas(doc, ['fatal-credential-errors']) || !fatalRulesAllEnabled) {
+          ensureMapInDoc(doc, ['fatal-credential-errors']);
+          doc.setIn(
+            ['fatal-credential-errors', 'inactive-token-owner'],
+            values.fatalInactiveTokenOwner
+          );
+          doc.setIn(['fatal-credential-errors', 'unauthorized'], values.fatalUnauthorized);
+          doc.setIn(['fatal-credential-errors', 'usage-limit'], values.fatalUsageLimit);
+          deleteIfMapEmpty(doc, ['fatal-credential-errors']);
+        }
+
         setDisableImageGenerationInDoc(
           doc,
           ['disable-image-generation'],

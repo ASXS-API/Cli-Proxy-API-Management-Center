@@ -94,6 +94,9 @@ export type VisualConfigValues = {
   maxRetryCredentials: string;
   maxRetryInterval: string;
   disableCooling: boolean;
+  fatalInactiveTokenOwner: boolean;
+  fatalUnauthorized: boolean;
+  fatalUsageLimit: boolean;
   disableImageGeneration: DisableImageGenerationMode;
   authAutoRefreshWorkers: string;
   quotaSwitchProject: boolean;
@@ -155,6 +158,9 @@ export const DEFAULT_VISUAL_VALUES: VisualConfigValues = {
   maxRetryCredentials: '',
   maxRetryInterval: '',
   disableCooling: false,
+  fatalInactiveTokenOwner: true,
+  fatalUnauthorized: true,
+  fatalUsageLimit: true,
   disableImageGeneration: 'false',
   authAutoRefreshWorkers: '',
   quotaSwitchProject: true,
